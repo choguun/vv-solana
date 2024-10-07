@@ -6,15 +6,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { twMerge } from "tailwind-merge";
 import { Group } from "three";
 
-import { useAmalgema } from "../../hooks/useAmalgema";
-import { addressToEntityID } from "../../mud/setupNetwork";
-import { useExternalAccount } from "../hooks/useExternalAccount";
 import { Modal } from "../Modal";
 import { Button } from "../Theme/SkyStrife/Button";
-
-// interface CharacterModalProps {
-//   open?: boolean;
-// }
 
 interface ModelProps {
   url: string;
@@ -22,20 +15,7 @@ interface ModelProps {
 
 const Model: React.FC<ModelProps> = ({ url }) => {
   const group = useRef<Group>(null);
-  const { scene, animations } = useGLTF(url);
-  // const { actions } = useAnimations(animations, group);
-
-  // useEffect(() => {
-  //   if (actions && actions[0]) {
-  //     actions[0].play();
-  //   }
-  // }, [actions]);
-
-  // useFrame((state, delta) => {
-  //   if (group.current) {
-  //     group.current.rotation.y += delta; // Rotate the model around the y-axis
-  //   }
-  // });
+  const { scene } = useGLTF(url);
 
   const [positionOffset, setPositionOffset] = useState(0);
 
@@ -51,72 +31,6 @@ const Model: React.FC<ModelProps> = ({ url }) => {
       group.current.position.y = -3 + Math.sin(positionOffset) * 0.1; // Adjust the amplitude of the motion
     }
   });
-
-  const [keysPressed, setKeysPressed] = useState({
-    w: false,
-    a: false,
-    s: false,
-    d: false,
-  });
-  const [walkCycle, setWalkCycle] = useState(0);
-
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     setKeysPressed((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: true }));
-  //   };
-
-  //   const handleKeyUp = (event: KeyboardEvent) => {
-  //     setKeysPressed((prevKeys) => ({ ...prevKeys, [event.key.toLowerCase()]: false }));
-  //   };
-
-  //   window.addEventListener('keydown', handleKeyDown);
-  //   window.addEventListener('keyup', handleKeyUp);
-
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyDown);
-  //     window.removeEventListener('keyup', handleKeyUp);
-  //   };
-  // }, []);
-
-  useEffect(() => {
-    // Debug: Print all object names in the scene
-    scene.traverse((object) => {
-      if (object.name) {
-        // console.log(object.name);
-      }
-    });
-  }, [scene]);
-
-  // useFrame((state, delta) => {
-  //   if (group.current) {
-  //     const speed = 0.1;
-  //     const rotationSpeed = 0.05;
-
-  //     if (keysPressed.w) {
-  //       group.current.position.z -= speed;
-  //       setWalkCycle((prevCycle) => (prevCycle + delta) % (Math.PI * 2));
-  //     }
-  //     if (keysPressed.s) {
-  //       group.current.position.z += speed;
-  //       setWalkCycle((prevCycle) => (prevCycle + delta) % (Math.PI * 2));
-  //     }
-  //     if (keysPressed.a) {
-  //       group.current.rotation.y += rotationSpeed;
-  //     }
-  //     if (keysPressed.d) {
-  //       group.current.rotation.y -= rotationSpeed;
-  //     }
-
-  //     // console.log(group.current);
-  //     // Animate legs
-  //     // const leg1 = group.current.getObjectByName('Knee_L') as Object3D | undefined;
-  //     // const leg2 = group.current.getObjectByName('Knee_R') as Object3D | undefined;
-  //     // if (leg1 && leg2) {
-  //     //   leg1.rotation.x = Math.sin(walkCycle) * 0.5;
-  //     //   leg2.rotation.x = -Math.sin(walkCycle) * 0.5;
-  //     // }
-  //   }
-  // });
 
   scene.rotation.y = Math.PI; // Rotate 180 degrees around the y-axis
   scene.position.y = -15; // Lower the model by 1 unit
@@ -141,31 +55,17 @@ enum CharacterTypes {
 }
 
 export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
-  const {
-    network: {
-      components: { Character },
-    },
-    executeSystemWithExternalWallet,
-  } = useAmalgema() as any;
-
   const [character, setCharacter] = useState<CharacterTypes>(
     CharacterTypes.Unknown
   );
-
-  const { address } = useExternalAccount();
 
   const chooseCharacter = (character: CharacterTypes) => () => {
     setCharacter(character);
   };
 
   const registerCharacter = async (type: CharacterTypes) => {
-    // console.log('registerCharacter');
+    console.log('registerCharacter');
     // console.log(type);
-    await executeSystemWithExternalWallet({
-      systemCall: "registerCharacter",
-      systemId: "Create Character",
-      args: [[type], { account: address }],
-    });
     setOpen(false);
   };
 

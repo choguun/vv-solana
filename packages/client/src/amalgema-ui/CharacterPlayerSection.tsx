@@ -1,17 +1,12 @@
 import { useState, useRef } from "react";
 
-import { useComponentValue } from "@latticexyz/react";
-import { Entity } from "@latticexyz/recs";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
 import { Group } from "three";
 
 import { characterModels } from "../constants";
-import { useAmalgema } from "../hooks/useAmalgema";
-import { addressToEntityID } from "../mud/setupNetwork";
 
-import { useExternalAccount } from "./hooks/useExternalAccount";
 import { Button } from "./Theme/SkyStrife/Button";
 
 interface ModelProps {
@@ -54,34 +49,15 @@ export function CharacterPlayerSection({
 }: {
   setOpenCharacterModal: (open: boolean) => void;
 }) {
-  const {
-    network: {
-      components: { Character },
-    },
-    executeSystemWithExternalWallet,
-  } = useAmalgema() as any;
-
-  const { address } = useExternalAccount();
   const navigate = useNavigate();
 
-  const character =
-    useComponentValue(
-      Character,
-      address ? addressToEntityID(address) : ("0" as Entity)
-    )?.value ?? 0;
+  const character = 0;
 
   // TODO: Login to the game
   // TODO: go to main game page
   const handlePlaytoLogin = () => {
     try {
-      const position: VoxelCoord = { x: 1, y: 1, z: 1 };
-
-      executeSystemWithExternalWallet({
-        systemCall: "loginPlayer",
-        systemId: "login",
-        args: [[position], { account: address }],
-      });
-
+      
       localStorage.setItem("character-id", character.toString());
 
       setInterval(() => {

@@ -1,13 +1,16 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 // import { ConnectButton } from "@particle-network/connectkit";
 import { useNavigate } from "react-router-dom";
-import { useAccount } from "wagmi";
+import {
+  WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 import IconVVText from "../assets/images/logo/vv_text_logo.png";
-import { FAUCET_URL, BRIDGE_URL, CHAIN_NAME } from "../constants";
+import { FAUCET_URL, CHAIN_NAME } from "../constants";
 
 export const Main = () => {
-  const { isConnected } = useAccount();
+  const { connected } = useWallet();
   const navigate = useNavigate();
 
   return (
@@ -26,8 +29,8 @@ export const Main = () => {
         <img src={IconVVText} className="w-[50vw] -mt-10" alt="logo" />
       </div>
       <div className="relative z-10">
-        <ConnectButton />
-        {isConnected && (
+        <WalletMultiButton /><br/>
+        {connected && (
           <button
             className="p-4 bg-orange-400 text-white text-xl rounded-xl cursor-pointer mt-2"
             onClick={() => navigate("/lobby")}
@@ -38,10 +41,7 @@ export const Main = () => {
       </div>
       <div className="relative z-10 mt-2">
         <a href={FAUCET_URL} target="_blank">
-          <span>FAUCET&nbsp;&nbsp; | &nbsp;&nbsp;</span>
-        </a>
-        <a href={BRIDGE_URL} target="_blank">
-          <span>BRIDGE</span>
+          <span>FAUCET</span>
         </a>
       </div>
       <div className="relative z-10 mt-2">

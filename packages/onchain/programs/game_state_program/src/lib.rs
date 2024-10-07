@@ -59,9 +59,7 @@ pub struct InitializeWorldState<'info> {
     pub admin: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
-// #[] เรียกว่า Attributes เอาไว้กำหนด meta data ต่างๆที่เป็นข้อมูล
-// let's use the #[account] attribute to define a new Counter account type. The Counter struct defines one count field of type u64. 
-// This means that we can expect any new accounts initialized as a Counter type to have a matching data structure
+
 #[derive(Accounts)]
 pub struct AddPlayer<'info> {
     #[account(init, payer = wallet, space = DISCRIMINATOR + 32 + 32 + 8 + 8)]

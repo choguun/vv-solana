@@ -3,8 +3,11 @@ import { twMerge } from "tailwind-merge";
 import { MUD_URL } from "../links";
 
 import { AnnouncementModal } from "./AnnouncementModal";
-import { NetworkStatus } from "./NetworkStatus";
 import { Caption, Link, OverlineLarge } from "./Theme/SkyStrife/Typography";
+import {
+WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export function Header() {
   return (
@@ -28,8 +31,7 @@ export function Header() {
         </div>
 
         <AnnouncementModal />
-
-        <NetworkStatus />
+        <WalletMultiButton />
       </div>
     </div>
   );

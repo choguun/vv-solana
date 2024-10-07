@@ -1,4 +1,3 @@
-import { resourceToHex } from "@latticexyz/common";
 import { stringToHex } from "viem";
 
 import type { KnownWorldName } from "./types";
@@ -24,108 +23,6 @@ export const EMOJI = "🔮";
 export const LOCK_CLIENT = false;
 
 export const SEASON_NAME = "Season 1";
-
-export const UNLIMITED_DELEGATION = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "unlimited",
-});
-export const SYSTEMBOUND_DELEGATION = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "systembound",
-});
-export const TIMEBOUND_DELEGATION = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "timebound",
-});
-
-export const WORLD_REGISTRATION_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "Registration",
-});
-export const PLAYER_REGISTER_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "PlayerRegisterSystem",
-});
-export const ALLOW_LIST_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "AllowListSystem",
-});
-export const SEASON_PASS_ONLY_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "MatchAccess",
-  name: "SeasonPassOnly",
-});
-export const NAME_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "NameSystem",
-});
-export const LOBBY_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "LobbySystem",
-});
-export const PLAYER_DEREGISTER_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "PlayerDeregister",
-});
-export const MATCH_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "MatchSystem",
-});
-export const QUEST_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "QuestSystem",
-});
-export const MINE_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "MineSystem",
-});
-export const LOGIN_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "LoginSystem",
-});
-export const CHARACTER_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "CharacterSystem",
-});
-export const CANCEL_MATCH_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "CancelMatchSyste",
-});
-export const LEVEL_UPLOAD_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "LevelUploadSystem",
-});
-export const BUILD_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "BuildSystem",
-});
-export const MOVE_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "MoveSystem",
-});
-export const COPY_MAP_SYSTEM_ID = resourceToHex({
-  type: "system",
-  namespace: "",
-  name: "CopyMapSystem",
-});
 
 /* -------------------------------------------------------------------------- */
 /*                                    LINKS                                   */
@@ -173,7 +70,7 @@ export const characterModels = [
 ];
 
 export const FAUCET_URL = "https://www.bnbchain.org/en/testnet-faucet";
-export const BRIDGE_URL = "https://opbnb-testnet-bridge.bnbchain.org/deposit";
-export const CHAIN_NAME = "opBNB Testnet";
+export const BRIDGE_URL = "https://faucet.solana.com/";
+export const CHAIN_NAME = "Solana Devnet";
 
-export const NATIVE_SYMBOL = "tBNB";
+export const NATIVE_SYMBOL = "SOL";
