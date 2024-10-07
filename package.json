@@ -3,13 +3,8 @@
   "private": true,
   "scripts": {
     "build:client": "cd packages/client && pnpm build",
-    "dev": "mprocs",
     "dev:client": "pnpm --filter 'client' run dev",
-    "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
-    "mud:up": "pnpm mud set-version --tag main && pnpm install",
-    "prepare": "(forge --version || pnpm foundry:up)",
-    "test": "pnpm recursive run test",
-    "start-indexer": "export RPC_HTTP_URL=https://opbnb-testnet-rpc.bnbchain.org && export START_BLOCK=40220523 && export SQLITE_FILENAME=indexer.db && export PORT=3005 && npx -y -p @latticexyz/store-indexer sqlite-indexer"
+    "test": "pnpm recursive run test"
   },
   "devDependencies": {
     "@swc/core": "^1.3.41",
