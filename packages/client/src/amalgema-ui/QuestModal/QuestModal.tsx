@@ -29,11 +29,11 @@ export function QuestModal({ setOpen, isOpen }: QuestModalProps) {
       <div className="mb-5">
         <div className="px-10 py-4 border-2 border-black border-solid rounded-md inline-block w-full">
           <span className="text-xl">
-            Daily Check-in 0/18
+            Daily Check-in 1/1
           </span>
           <div className="float-right">
             <span className="text-xl font-black mr-5 text-green-700">
-              500 Points
+              100 $COIN
             </span>
             <Button
               buttonType="secondary"
@@ -42,25 +42,7 @@ export function QuestModal({ setOpen, isOpen }: QuestModalProps) {
               }
               onClick={() => handleClaim(QuestTypes.DAILY_CHECK_IN)}
             >
-              {true ? "CLAIMED" : "CLAIM"}
-            </Button>
-          </div>
-        </div>
-        <div className="px-10 py-4 border-2 border-black border-solid rounded-md inline-block w-full mt-2">
-          <span className="text-xl">
-            Daily Log-in 0/18
-          </span>
-          <div className="float-right">
-            <span className="text-xl font-black mr-5 text-green-700">
-              500 Points
-            </span>
-            <Button
-              buttonType="secondary"
-              className="float-right"
-              disabled={true}
-              onClick={() => handleClaim(QuestTypes.DAILY_LOG_IN)}
-            >
-              CLAIM
+              {false ? "CLAIMED" : "CLAIM"}
             </Button>
           </div>
         </div>
@@ -70,7 +52,7 @@ export function QuestModal({ setOpen, isOpen }: QuestModalProps) {
           </span>
           <div className="float-right">
             <span className="text-xl font-black mr-5 text-green-700">
-              1,000 Points
+              1,000 $COIN
             </span>
             <Button
               buttonType="secondary"

@@ -8,6 +8,7 @@ import { Group } from "three";
 
 import { Modal } from "../Modal";
 import { Button } from "../Theme/SkyStrife/Button";
+import { useAnchor } from "../../containers/Providers/Anchor";
 
 interface ModelProps {
   url: string;
@@ -55,6 +56,8 @@ enum CharacterTypes {
 }
 
 export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
+  const { createPlayerAccount, fetchCharacter } = useAnchor();
+  const [name, setName] = useState<string>("");
   const [character, setCharacter] = useState<CharacterTypes>(
     CharacterTypes.Unknown
   );
@@ -63,9 +66,12 @@ export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
     setCharacter(character);
   };
 
-  const registerCharacter = async (type: CharacterTypes) => {
+  const registerCharacter = async (name: string, type: CharacterTypes) => {
     console.log('registerCharacter');
-    // console.log(type);
+    await createPlayerAccount(name, type);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
     setOpen(false);
   };
 
@@ -75,8 +81,8 @@ export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
         <Button
           className="mx-auto"
           buttonType="primary"
-          disabled={character === CharacterTypes.Unknown}
-          onClick={() => registerCharacter(character)}
+          disabled={character === CharacterTypes.Unknown || name === ""}
+          onClick={() => registerCharacter(name, character)}
         >
           Choose this character
         </Button>
@@ -210,6 +216,7 @@ export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
               </Canvas>
             </div>
           </div>
+          <input className="mt-2 w-full border-2 border-solid border-black rounded-sm p-2 text-black" placeholder="Username" type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
       </div>
     </Modal>

@@ -11,6 +11,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
     "@latticexyz/common": "2.2.7",
     "@latticexyz/dev-tools": "2.2.7",
     "@latticexyz/protocol-parser": "^2.2.8",
@@ -50,6 +51,7 @@
     "luxon": "^3.5.0",
     "mobx": "^6.13.1",
     "noisejs": "^2.1.0",
+    "onchain": "workspace:*",
     "postprocessing": "^6.36.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

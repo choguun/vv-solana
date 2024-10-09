@@ -35,15 +35,15 @@ export function AnnouncementModal() {
       >
         <div></div>
         <Heading>Season 1</Heading>
-        <OverlineSmall>October 4nd, 2024</OverlineSmall>
+        {/* <OverlineSmall>October 4nd, 2024</OverlineSmall> */}
 
         <Heading className="mt-6 mb-4 font-bold text-ss-text-default">
           🌟 Season 1 Begins 🌟
         </Heading>
-        <p className="text-ss-text-light">
+        {/* <p className="text-ss-text-light">
           Get ready for another exciting season! VoxelWorld Season 1 kicks off
           on October 4rd and runs through October 31st.
-        </p>
+        </p> */}
 
         <br />
       </Modal>

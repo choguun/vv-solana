@@ -15,6 +15,7 @@ import {
     WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
+import { AnchorProviderContext } from './Providers/Anchor'; // Import the Anchor context
  
 // Default styles that can be overridden by your app
 import "@solana/wallet-adapter-react-ui/styles.css"; // Replace require with import
@@ -71,12 +72,14 @@ export function App() {
       <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
                 <WalletModalProvider>
+                  <AnchorProviderContext>
                     <Toaster
                       toastOptions={{
                         duration: 3000,
                       }}
                     />
                     <RouterProvider router={router} />
+                  </AnchorProviderContext>
                 </WalletModalProvider>
             </WalletProvider>
       </ConnectionProvider>

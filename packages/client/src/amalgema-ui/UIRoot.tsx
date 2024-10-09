@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Header } from "./Header";
 import { Button } from "./Theme/SkyStrife/Button";
@@ -10,9 +10,33 @@ import { CharacterPlayerSection } from "./CharacterPlayerSection";
 
 import { QuestModal } from "./QuestModal";
 
+import { useAnchor } from "../containers/Providers/Anchor";
+
 export const UIRoot = () => {
+  const { dailyCheckIn, fetchPlayerPoint, program } = useAnchor();
+
   const [openCharacterModal, setOpenCharacterModal] = useState(false);
   const [openQuestModal, setOpenQuestModal] = useState(false);
+  const [points, setPoints] = useState(0);
+
+  const handleDailyCheckIn = async () => {
+    console.log("handleDailyCheckIn");
+    await dailyCheckIn();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+
+  const doFetchPlayerPoint = async () => {
+    console.log("doFetchPlayerPoint");
+    const data = await fetchPlayerPoint();
+    setPoints(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    doFetchPlayerPoint();
+  }, [program]);
 
   return (
     <div className="flex h-screen">
@@ -31,6 +55,14 @@ export const UIRoot = () => {
         <div className="grow px-8 py-6 flex flex-col">
           <div className="h-6" />
           <div>
+            <span className="text-3xl font-black">Points: {points}</span>
+            <Button
+              buttonType="secondary"
+              className="ml-3"
+              onClick={() => handleDailyCheckIn()}
+            >
+              Daily Check-in
+            </Button>
             <Button
               buttonType="primary"
               className="ml-3"
@@ -38,6 +70,9 @@ export const UIRoot = () => {
             >
               Quests
             </Button>
+          </div>
+          <div className="mt-2">
+            <span className="text-2xl font-black">$COIN: 0</span>
           </div>
           <CharacterPlayerSection
             setOpenCharacterModal={setOpenCharacterModal}

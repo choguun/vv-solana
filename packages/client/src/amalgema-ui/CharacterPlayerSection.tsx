@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
@@ -8,6 +8,9 @@ import { Group } from "three";
 import { characterModels } from "../constants";
 
 import { Button } from "./Theme/SkyStrife/Button";
+import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
+import { useAnchor } from "../containers/Providers/Anchor";
+import { set } from "@coral-xyz/anchor/dist/cjs/utils/features";
 
 interface ModelProps {
   url: string;
@@ -50,8 +53,11 @@ export function CharacterPlayerSection({
   setOpenCharacterModal: (open: boolean) => void;
 }) {
   const navigate = useNavigate();
-
-  const character = 0;
+  const { connection } = useConnection();
+  const wallet = useAnchorWallet();
+  const { fetchCharacter, program } = useAnchor();
+  const [character, setCharacter] = useState<number>(0);
+  // const character = 0;
 
   // TODO: Login to the game
   // TODO: go to main game page
@@ -67,6 +73,23 @@ export function CharacterPlayerSection({
       console.error(e);
     }
   };
+
+  const getPlayerCharacter = async () => {
+    console.log("getPlayerCharacter: ");
+    const data = await fetchCharacter();
+    console.log(data);
+    if(data !== undefined) {
+      setCharacter(data);
+    }
+  }
+
+  useEffect(() => {
+    console.log("useEffect: ");
+    console.log(program);
+    if(program !== undefined) {
+      getPlayerCharacter();
+    }
+  }, [program]);
 
   return (
     <>
