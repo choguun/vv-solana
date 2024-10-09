@@ -28,6 +28,6 @@ Voxelverses is fully on-chain RPG and MMO sandbox game set on a planet discovere
 
 1. Creaete Account \
 1.1 Choose Character and Username \
-2 Do quest such as daily check-in, daily login, gathering resource \
-3 Login in world \
-4 Mine to gathering resource
+2. Do quest such as daily check-in, daily login, gathering resource \
+3. Login in world \
+4. Mine to gathering resource
