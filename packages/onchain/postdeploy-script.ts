@@ -53,19 +53,6 @@ const [worldStatePDA,] = PublicKey.findProgramAddressSync(
 
     console.log("World State initialized successfully!");
 
-    console.log("Updating Treasury Total...");
-
-    // Call the update_treasury_total instruction
-    await program.methods
-      .updateTreasuryTotal(new BN(2000)) // Replace with your desired treasury total value
-      .accounts({
-        admin: adminKeypair.publicKey,
-        worldState: worldStatePDA,
-      })
-      .rpc();
-
-    console.log("Treasury Total updated successfully!");
-
   } catch (err) {
     console.error("Failed to run post-deployment script:", err);
   }
