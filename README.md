@@ -8,5 +8,5 @@
 - pnpm run preview
 2. <b>packages/onchain</b> is on-chain programs
 - anchor build
-- anchor deploy
+- pnpm run deploy
 
