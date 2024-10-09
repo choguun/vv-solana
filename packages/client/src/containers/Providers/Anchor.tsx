@@ -5,7 +5,7 @@ import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import idl from 'onchain/target/idl/game_state_program.json'; // Adjust path to your IDL file
 import toast from 'react-hot-toast';
-import { TOKEN_PROGRAM_ID, getOrCreateAssociatedTokenAccount } from '@solana/spl-token';
+// import { TOKEN_PROGRAM_ID, getOrCreateAssociatedTokenAccount } from '@solana/spl-token';
 import { SPL_PUBLIC_KEY } from '../../env';
 
 // Create a context to hold the program and provider information
@@ -23,21 +23,21 @@ export const AnchorProviderContext: React.FC<{ children: React.ReactNode }> = ({
   const provider = new AnchorProvider(connection, wallet, {});
   setProvider(provider);
 
-  async function getPlayerTokenAccount(provider, rewardMint) {
-    // Fetch the wallet public key (assumes the wallet is connected)
-    const walletPublicKey = provider.wallet.publicKey;
+  // async function getPlayerTokenAccount(provider, rewardMint) {
+  //   // Fetch the wallet public key (assumes the wallet is connected)
+  //   const walletPublicKey = provider.wallet.publicKey;
   
-    // Get or create the associated token account for the player
-    const tokenAccount = await getOrCreateAssociatedTokenAccount(
-      provider.connection,            // Solana connection
-      provider.wallet.payer,          // Payer of the associated token account creation
-      rewardMint,                     // SPL token mint address
-      walletPublicKey                 // Owner of the token account
-    );
+  //   // Get or create the associated token account for the player
+  //   const tokenAccount = await getOrCreateAssociatedTokenAccount(
+  //     provider.connection,            // Solana connection
+  //     provider.wallet.payer,          // Payer of the associated token account creation
+  //     rewardMint,                     // SPL token mint address
+  //     walletPublicKey                 // Owner of the token account
+  //   );
   
-    console.log("Player's associated token account:", tokenAccount.address.toString());
-    return tokenAccount.address;
-  }
+  //   console.log("Player's associated token account:", tokenAccount.address.toString());
+  //   return tokenAccount.address;
+  // }
 
   const associatedTokenProgram = new PublicKey("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
 
@@ -141,7 +141,7 @@ export const AnchorProviderContext: React.FC<{ children: React.ReactNode }> = ({
           playerRewardTokenAccount: playerTokenAccount,
           admin: admin,
           systemProgram: SystemProgram.programId,
-          tokenProgram: TOKEN_PROGRAM_ID,
+          tokenProgram: "TOKEN_PROGRAM_ID",
           associatedTokenProgram: associatedTokenProgram,
           rent: web3.SYSVAR_RENT_PUBKEY,
         },
