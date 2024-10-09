@@ -1,6 +1,8 @@
 import { Modal } from "../Modal";
 import { Button } from "../Theme/SkyStrife/Button";
 
+import { useAnchor } from "../../containers/Providers/Anchor";
+
 interface QuestModalProps {
   setOpen: (open: boolean) => void;
   isOpen: boolean;
@@ -18,10 +20,11 @@ enum QuestTypes {
 }
 
 export function QuestModal({ setOpen, isOpen }: QuestModalProps) {
-
+  const { completeQuest } = useAnchor();
 
   const handleClaim = async (type: QuestTypes) => {
     console.log("handleClaim");
+    await completeQuest();
   };
 
   return (
@@ -38,7 +41,7 @@ export function QuestModal({ setOpen, isOpen }: QuestModalProps) {
             <Button
               buttonType="secondary"
               disabled={
-                true
+                false
               }
               onClick={() => handleClaim(QuestTypes.DAILY_CHECK_IN)}
             >

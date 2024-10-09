@@ -16,6 +16,7 @@ const {
   VITE_APP_PROJECT_ID,
   VITE_APP_CLIENT_KEY,
   VITE_APP_APP_ID,
+  VITE_SPL_PUBLIC_KEY,
 } = import.meta.env;
 
 export const BSC_RPC_URL = VITE_BSC_RPC_URL as string;
@@ -35,3 +36,5 @@ export const VAULT_CONTRACT = VITE_VAULT_CONTRACT;
 export const APP_PROJECT_ID = VITE_APP_PROJECT_ID;
 export const APP_CLIENT_KEY = VITE_APP_CLIENT_KEY;
 export const APP_APP_ID = VITE_APP_APP_ID;
+
+export const SPL_PUBLIC_KEY = VITE_SPL_PUBLIC_KEY;

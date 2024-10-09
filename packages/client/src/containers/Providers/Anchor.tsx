@@ -2,9 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AnchorProvider, Idl, Program, setProvider, web3, BN } from '@coral-xyz/anchor';
 import * as anchor from '@coral-xyz/anchor';
 import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, SystemProgram } from "@solana/web3.js";
 import idl from 'onchain/target/idl/game_state_program.json'; // Adjust path to your IDL file
 import toast from 'react-hot-toast';
+import { TOKEN_PROGRAM_ID, getOrCreateAssociatedTokenAccount } from '@solana/spl-token';
+import { SPL_PUBLIC_KEY } from '../../env';
 
 // Create a context to hold the program and provider information
 const AnchorContext = createContext(null);
@@ -20,6 +22,31 @@ export const AnchorProviderContext: React.FC<{ children: React.ReactNode }> = ({
 
   const provider = new AnchorProvider(connection, wallet, {});
   setProvider(provider);
+
+  async function getPlayerTokenAccount(provider, rewardMint) {
+    // Fetch the wallet public key (assumes the wallet is connected)
+    const walletPublicKey = provider.wallet.publicKey;
+  
+    // Get or create the associated token account for the player
+    const tokenAccount = await getOrCreateAssociatedTokenAccount(
+      provider.connection,            // Solana connection
+      provider.wallet.payer,          // Payer of the associated token account creation
+      rewardMint,                     // SPL token mint address
+      walletPublicKey                 // Owner of the token account
+    );
+  
+    console.log("Player's associated token account:", tokenAccount.address.toString());
+    return tokenAccount.address;
+  }
+
+  const associatedTokenProgram = new PublicKey("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
+
+  // Function to get the reward mint address
+  async function getRewardMintAddress() {
+    // Replace with your known reward mint address or use a constant if you created it
+    const rewardMint = new PublicKey(SPL_PUBLIC_KEY);
+    return rewardMint;
+  }
 
   const createPlayerAccount = async (name: string, characterId: number) => {
     toast.loading("Create Account...");
@@ -89,6 +116,46 @@ export const AnchorProviderContext: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
+  // Function to call complete_quest
+  const completeQuest = async () => {
+  try {
+    // Fetch the necessary public keys
+    const rewardMint = await getRewardMintAddress();
+    const playerTokenAccount = await getPlayerTokenAccount(provider, rewardMint);
+
+    // Find the WorldState PDA address
+    const admin = provider.wallet.publicKey; // Admin is the wallet signer here
+    const [worldStatePDA,] = PublicKey.findProgramAddressSync(
+      [Buffer.from("world_state"), admin.toBuffer()],
+      program.programID
+    );
+
+    // Execute the complete_quest function on the program
+    const tx = await program.rpc.completeQuest(
+      new BN(1000), // Replace with the reward amount to mint
+      {
+        accounts: {
+          worldState: worldStatePDA,
+          player: provider.wallet.publicKey,
+          rewardMint: rewardMint,
+          playerRewardTokenAccount: playerTokenAccount,
+          admin: admin,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: associatedTokenProgram,
+          rent: web3.SYSVAR_RENT_PUBKEY,
+        },
+        signers: [],
+      }
+    );
+
+    console.log("Transaction successful with signature:", tx);
+  } catch (err) {
+    console.error("Failed to complete quest:", err);
+  }
+}
+
+
   const fetchCharacter = async () => {
     console.log("fetchCharacter: ");
     if(program) {
@@ -140,7 +207,7 @@ export const AnchorProviderContext: React.FC<{ children: React.ReactNode }> = ({
   }, [wallet, connection]);
 
   return (
-    <AnchorContext.Provider value={{ createPlayerAccount, dailyCheckIn, fetchCharacter, fetchPlayerPoint, program }}>
+    <AnchorContext.Provider value={{ createPlayerAccount, dailyCheckIn, completeQuest, fetchCharacter, fetchPlayerPoint, program }}>
       {children}
     </AnchorContext.Provider>
   );
