@@ -56,7 +56,7 @@ enum CharacterTypes {
 }
 
 export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
-  const { createPlayerAccount, fetchCharacter } = useAnchor();
+  const { createPlayerAccount } = useAnchor();
   const [name, setName] = useState<string>("");
   const [character, setCharacter] = useState<CharacterTypes>(
     CharacterTypes.Unknown
@@ -69,6 +69,7 @@ export function CharacterModal({ setOpen, isOpen }: CharacterModalProps) {
   const registerCharacter = async (name: string, type: CharacterTypes) => {
     console.log('registerCharacter');
     await createPlayerAccount(name, type);
+    localStorage.setItem("vv-username", name);
     setTimeout(() => {
       window.location.reload();
     }, 2000);

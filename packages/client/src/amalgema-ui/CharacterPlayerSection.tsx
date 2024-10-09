@@ -64,7 +64,7 @@ export function CharacterPlayerSection({
   const handlePlaytoLogin = () => {
     try {
       
-      localStorage.setItem("character-id", character.toString());
+      localStorage.setItem("vv-character-id", character.toString());
 
       setInterval(() => {
         navigate("/world");
