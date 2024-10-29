@@ -2,7 +2,7 @@
 
 ### Fully on-chain RPG with MMO sandbox games
 
-#### Howt to install
+#### How to install
 - pnpm i
 
 #### Project structure
